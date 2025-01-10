@@ -1,0 +1,659 @@
+{
+	"info": {
+		"_postman_id": "8af48c2a-4663-4d00-8848-82fd3aed8343",
+		"name": "Payment Gateway Challenge [Pamela Nelson]",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38976720"
+	},
+	"item": [
+		{
+			"name": "Acquiring Bank Simulator",
+			"item": [
+				{
+					"name": "/payments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"card_number\": \"2222405343248877\",\n    \"expiry_date\": \"04/2025\",\n    \"currency\": \"GBP\",\n    \"amount\": 100,\n    \"cvv\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aquiring_bank_base_url}}/payments",
+							"host": [
+								"{{aquiring_bank_base_url}}"
+							],
+							"path": [
+								"payments"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": [
+						{
+							"name": "Authorized 200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"card_number\": \"2222405343248877\",\n    \"expiry_date\": \"04/2025\",\n    \"currency\": \"GBP\",\n    \"amount\": 100,\n    \"cvv\": \"123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{aquiring_bank_base_url}}/payments",
+									"host": [
+										"{{aquiring_bank_base_url}}"
+									],
+									"path": [
+										"payments"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 Jan 2025 14:13:21 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"authorized\": true,\n    \"authorization_code\": \"0bb07405-6d44-4b50-a14f-7ae0beff13ad\"\n}"
+						},
+						{
+							"name": "Declined 200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"card_number\": \"2222405343248117\",\n    \"expiry_date\": \"01/2026\",\n    \"currency\": \"USD\",\n    \"amount\": 60000,\n    \"cvv\": \"456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{aquiring_bank_base_url}}/payments",
+									"host": [
+										"{{aquiring_bank_base_url}}"
+									],
+									"path": [
+										"payments"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 Jan 2025 14:17:17 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"authorized\": false,\n    \"authorization_code\": \"\"\n}"
+						},
+						{
+							"name": "Error 400",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"card_number\": \"4532485489773467\",\n    \"expiry_date\": \"10/2025\",\n    \"currency\": \"GBP\",\n    \"amount\": 1000,\n    \"cvv\": \"456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{aquiring_bank_base_url}}/payments",
+									"host": [
+										"{{aquiring_bank_base_url}}"
+									],
+									"path": [
+										"payments"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 Jan 2025 14:19:42 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errorMessage\": \"The request supplied is not supported by the simulator\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Payment Gateway",
+			"item": [
+				{
+					"name": "payments",
+					"item": [
+						{
+							"name": "/payments/:id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{payment_gateway_base_url}}/v1/payments/{{payment_id}}",
+									"host": [
+										"{{payment_gateway_base_url}}"
+									],
+									"path": [
+										"v1",
+										"payments",
+										"{{payment_id}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 Ok",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{payment_gateway_base_url}}/v1/payments/{{payment_id}}",
+											"host": [
+												"{{payment_gateway_base_url}}"
+											],
+											"path": [
+												"v1",
+												"payments",
+												"{{payment_id}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 09 Jan 2025 21:16:09 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"b27d6b54-7b5e-45ba-b3bc-727b625fc439\",\n    \"status\": \"Authorized\",\n    \"cardNumberLastFour\": \"8877\",\n    \"expiryMonth\": 4,\n    \"expiryYear\": 2025,\n    \"currency\": \"GBP\",\n    \"amount\": 100\n}"
+								},
+								{
+									"name": "404 Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{payment_gateway_base_url}}/v1/payments/{{payment_id}}",
+											"host": [
+												"{{payment_gateway_base_url}}"
+											],
+											"path": [
+												"v1",
+												"payments",
+												"{{payment_id}}"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 09 Jan 2025 21:20:33 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Entity not found\"\n}"
+								},
+								{
+									"name": "400 Invalid id Format",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{payment_gateway_base_url}}/v1/payments/{{payment_id}}",
+											"host": [
+												"{{payment_gateway_base_url}}"
+											],
+											"path": [
+												"v1",
+												"payments",
+												"{{payment_id}}"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 09 Jan 2025 21:53:28 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Invalid argument format\"\n}"
+								}
+							]
+						},
+						{
+							"name": "/payments",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {\r",
+											"    var paymentId = pm.response.json().id;\r",
+											"    pm.collectionVariables.set(\"payment_id\", paymentId);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"cardNumber\": \"2222405343248877\",\r\n    \"expiryMonth\": 4,\r\n    \"expiryYear\": 2026,\r\n    \"cvv\": \"123\",\r\n    \"currency\": \"GBP\",\r\n    \"amount\": 100\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{payment_gateway_base_url}}/v1/payments",
+									"host": [
+										"{{payment_gateway_base_url}}"
+									],
+									"path": [
+										"v1",
+										"payments"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 Authorized",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"cardNumber\": \"2222405343248877\",\r\n    \"expiryMonth\": 4,\r\n    \"expiryYear\": 2025,\r\n    \"cvv\": \"123\",\r\n    \"currency\": \"GBP\",\r\n    \"amount\": 100\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{payment_gateway_base_url}}/v1/payments",
+											"host": [
+												"{{payment_gateway_base_url}}"
+											],
+											"path": [
+												"v1",
+												"payments"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 09 Jan 2025 21:09:12 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"24ca8fb7-e994-4f6b-8fe4-1cd949c5f3b2\",\n    \"status\": \"Authorized\",\n    \"cardNumberLastFour\": \"8877\",\n    \"expiryMonth\": 4,\n    \"expiryYear\": 2025,\n    \"currency\": \"GBP\",\n    \"amount\": 100\n}"
+								},
+								{
+									"name": "200 Declined",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"cardNumber\": \"2222405343248117\",\r\n    \"expiryMonth\": 1,\r\n    \"expiryYear\": 2026,\r\n    \"cvv\": \"456\",\r\n    \"currency\": \"USD\",\r\n    \"amount\": 60000\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{payment_gateway_base_url}}/v1/payments",
+											"host": [
+												"{{payment_gateway_base_url}}"
+											],
+											"path": [
+												"v1",
+												"payments"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 10 Jan 2025 05:25:05 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"bc3db87a-cc83-4d40-b268-56bcaf5b6fed\",\n    \"status\": \"Declined\",\n    \"cardNumberLastFour\": \"8117\",\n    \"expiryMonth\": 1,\n    \"expiryYear\": 2026,\n    \"currency\": \"USD\",\n    \"amount\": 60000\n}"
+								},
+								{
+									"name": "400 Validation Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"cardNumber\": \"2222405343248877\",\r\n    \"expiryMonth\": 4,\r\n    \"expiryYear\": 2025,\r\n    \"cvv\": \"123\",\r\n    \"currency\": \"\",\r\n    \"amount\": 100\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{payment_gateway_base_url}}/v1/payments",
+											"host": [
+												"{{payment_gateway_base_url}}"
+											],
+											"path": [
+												"v1",
+												"payments"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 09 Jan 2025 22:15:47 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"status: REJECTED\\ncurrency: Invalid currency code\\ncurrency: Currency must be exactly 3 characters long\"\n}"
+								},
+								{
+									"name": "422 Unsupported Card",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"cardNumber\": \"4701634248325060\",\r\n    \"expiryMonth\": 4,\r\n    \"expiryYear\": 2026,\r\n    \"cvv\": \"123\",\r\n    \"currency\": \"GBP\",\r\n    \"amount\": 100\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{payment_gateway_base_url}}/v1/payments",
+											"host": [
+												"{{payment_gateway_base_url}}"
+											],
+											"path": [
+												"v1",
+												"payments"
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 09 Jan 2025 22:19:28 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"status: REJECTED. Card not supported\"\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		},
+		{
+			"key": "aquiring_bank_base_url",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "payment_gateway_base_url",
+			"value": "http://localhost:8090/api/v1",
+			"type": "default"
+		},
+		{
+			"key": "payment_id",
+			"value": ""
+		}
+	]
+}
