@@ -3,6 +3,7 @@ package com.checkout.payment.gateway.util;
 import static java.lang.Character.getNumericValue;
 import static java.time.LocalDate.now;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isNumeric;
 
 public class CardUtils {
 
@@ -14,6 +15,8 @@ public class CardUtils {
   }
 
   public static boolean passesLuhnCheck(String cardNumber) {
+    if (isEmpty(cardNumber) || !isNumeric(cardNumber)) return false;
+
     var sum = 0;
     var isEvenPositionDigit = false;
     for (int i = cardNumber.length() - 1; i >= 0; i--) {
