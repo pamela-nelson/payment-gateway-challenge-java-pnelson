@@ -18,13 +18,16 @@
 **LinkedIn:** [/in/PamelaJayneNelson](https://www.linkedin.com/in/pamelajaynenelson/)
 
 ## Features
-* Logging of all requests with linked correlationId
+* Logging of all requests/responses with linked correlationId
 
 
 * Validations of request payloads using Spring validation
 
 
 * Card numbers are luhn checked before being sent to acquiring bank to reduce calls for known invalid cards
+
+
+* Postman Collection to make requests including sample responses
 
 ## Notes
 The Declined scenario card fails Luhn check so cannot be sent to the simulator.
@@ -79,6 +82,8 @@ There is an application.properties file including the following settings.
 
 I have included unit tests to test various scenarios both happy path and negative. I've made use of parameterised tests and created a mock client for the simulator.
 
-For time reasons I haven't included automated integration tests. For integration testing I have used a postman collection which is included in the postman folder. It shows example responses and can be used to send requests to the service.
+For time reasons I haven't included automated integration tests. 
+
+For integration testing I have used a postman collection which is included in the postman folder. It shows example responses and can be used to send requests to the service.
 
 
